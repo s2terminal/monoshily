@@ -1,4 +1,5 @@
 dest/
+src/config.ts
 
 # see https://github.com/github/gitignore/blob/master/Node.gitignore
 

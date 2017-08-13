@@ -1,2 +1,9 @@
-export let api_url = 'https://westus.api.cognitive.microsoft.com/vision/v1.0/describe';
-export let api_key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+export let computer_vision = {
+  api_url: 'https://westus.api.cognitive.microsoft.com/vision/v1.0/describe',
+  api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+}
+export let translator_text = {
+  issue_token_url: 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
+  api_url: 'https://api.microsofttranslator.com/V2/Http.svc/Translate',
+  api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+}

@@ -23,4 +23,9 @@ module.exports = {
     ],
   },
   devtool: 'source-map',
+  devServer: {
+    contentBase: 'dest',
+    port: 3000,
+    inline: true,
+  },
 };

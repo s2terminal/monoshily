@@ -1,4 +1,9 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s2terminal/monoshily.git"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "webpack",
     "watch": "webpack -w"

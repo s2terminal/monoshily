@@ -7,6 +7,7 @@ interface ImageFormProps {
 }
 interface ImageFormState {
   image_src: string;
+  image_url: string;
   textarea_value: string;
   header: string;
 }
@@ -14,23 +15,27 @@ interface ImageFormState {
 class ImageForm extends React.Component<ImageFormProps, ImageFormState> {
   constructor(props) {
     super(props);
-    this.state = { image_src: '', textarea_value: '', header: '画像のURLを入力して下さい' };
+    this.state = { image_src: '', image_url: '', textarea_value: '', header: '画像のURLを入力して下さい' };
     this.handleChangeFile = this.handleChangeFile.bind(this);
     this.handleChangeURL = this.handleChangeURL.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleChangeFile(event) {
     var files = event.target.files;
     var image_url = window.URL.createObjectURL(files[0]);
     this.setState({image_src: image_url});
   }
-  handleChangeURL(event) {
-    var image_url = event.target.value;
-    this.setState({image_src: image_url,header: "(解析しています...)"});
+  handleChangeURL(event){
+    this.setState({image_url: event.target.value});
+    this.setState({image_src: this.state.image_url});
+  }
+  handleSubmit(event) {
+    this.setState({image_src: this.state.image_url,header: "(解析しています...)"});
     SuperAgent
       .post(config.computer_vision.api_url)
       .set('Ocp-Apim-Subscription-Key', config.computer_vision.api_key)
       .set('Content-Type', 'application/json')
-      .send({url:image_url})
+      .send({url:this.state.image_url})
       .end(function(error, response){
         if (error) { return this.setState({header: response.text}); }
         var desc = JSON.parse(response.text).description.captions[0].text;
@@ -59,7 +64,7 @@ class ImageForm extends React.Component<ImageFormProps, ImageFormState> {
                 var parser = new DOMParser();
                 desc = parser.parseFromString(response_trans.text, 'text/xml').firstElementChild.textContent;
 
-                this.setState({header: desc, textarea_value: `<img alt="${desc}" src="${image_url}">`});
+                this.setState({header: desc, textarea_value: `<img alt="${desc}" src="${this.state.image_url}">`});
               }.bind(this));
           }.bind(this));
       }.bind(this));
@@ -74,6 +79,7 @@ class ImageForm extends React.Component<ImageFormProps, ImageFormState> {
             type="url" placeholder="http://www.example.com/" size={40}
             onBlur={this.handleChangeURL}
           />
+          <input value="URL上の画像を解析" type="button" onClick={this.handleSubmit} />
         </form>
         <textarea
           placeholder="ここにimgタグが出力されます" rows={5} cols={40}

@@ -1,3 +1,5 @@
+詳細: [【Azure Cognitive Services】画像認識でalt属性の説明文を自動生成してみた \- backstage](http://s2terminal.hatenablog.com/entry/2017/08/14/040523)
+
 ## Usage
 
 ```
